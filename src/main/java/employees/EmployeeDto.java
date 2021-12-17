@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XmlRootElement
 public class EmployeeDto {
-	private long Id;
+	private String Id;
 	private String name;
 }

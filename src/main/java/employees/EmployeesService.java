@@ -3,12 +3,12 @@ package employees;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -28,7 +28,7 @@ public class EmployeesService {
 		return modelMapper.map(filteredEmployees, targetListType);
 	}
 
-	public EmployeeDto listEmployeeById(long id) {
+	public EmployeeDto listEmployeeById(String id) {
 		return modelMapper.map(repository.findById(id)
 						.orElseThrow(() -> new IllegalArgumentException("employee not found"))
 				, EmployeeDto.class);
@@ -43,13 +43,14 @@ public class EmployeesService {
 	}
 
 	@Transactional
-	public EmployeeDto updateEmployee(long id, UpdateEmployeeCommand command) {
+	public EmployeeDto updateEmployee(String id, UpdateEmployeeCommand command) {
 		var employee = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("employee not found"));
 		employee.setName(command.getName());
+		repository.save(employee);
 		return modelMapper.map(employee, EmployeeDto.class);
 	}
 
-	public void deleteEmployee(long id) {
+	public void deleteEmployee(String id) {
 		repository.deleteById(id);
 	}
 

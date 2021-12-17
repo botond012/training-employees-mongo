@@ -44,12 +44,12 @@ public class EmployeesController {
 	}
 
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public EmployeeDto findEmployeeById(@PathVariable("id") long id) {
+	public EmployeeDto findEmployeeById(@PathVariable("id") String id) {
 		return employeesService.listEmployeeById(id);
 	}
 
 	//	@GetMapping("/{id}")
-	//	public ResponseEntity findEmployeeById(@PathVariable("id") long id) {
+	//	public ResponseEntity findEmployeeById(@PathVariable("id") String id) {
 	//		try {
 	//			return ResponseEntity.ok(employeesService.listEmployeeById(id));
 	//		} catch (IllegalArgumentException e) {
@@ -67,14 +67,14 @@ public class EmployeesController {
 	}
 
 	@PutMapping("/{id}")
-	public EmployeeDto createEmployee(@PathVariable("id") long id, @RequestBody UpdateEmployeeCommand command) {
+	public EmployeeDto createEmployee(@PathVariable("id") String id, @RequestBody UpdateEmployeeCommand command) {
 		return employeesService.updateEmployee(id, command);
 	}
 
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteEmployee(@PathVariable("id") long id) {
+	public void deleteEmployee(@PathVariable("id") String id) {
 		employeesService.deleteEmployee(id);
 	}
 
